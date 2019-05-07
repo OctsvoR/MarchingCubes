@@ -15,9 +15,10 @@ public class MarchingCube : MonoBehaviour {
 	public Detector ful;
 	public Detector fur;
 
-	Vector3[] vertices = new Vector3[12];
-	Triangle[] triangles = new Triangle[5];
-	GridCell gridCell = new GridCell ();
+	private Vector3[] vertices = new Vector3[12];
+	private Triangle[] triangles = new Triangle[5];
+
+	private GridCell gridCell = new GridCell ();
 
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
 		float mu;
@@ -174,5 +175,18 @@ public class MarchingCube : MonoBehaviour {
 		Polygonise (gridCell, 0.5f, triangles);
 
 		DrawLines ();
+	}
+
+	private void Init () {
+		gridCell.p = new Vector3[8];
+		gridCell.val = new float[8];
+
+		for (int i = 0; i < triangles.Length; i++) {
+			triangles[i].p = new Vector3[3];
+		}
+	}
+
+	private void Start () {
+		Init ();
 	}
 }

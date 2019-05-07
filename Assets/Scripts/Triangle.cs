@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Triangle {
-	public Vector3[] p = new Vector3[3];
+public struct Triangle {
+
+	public Vector3[] p;
 }
