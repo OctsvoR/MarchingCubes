@@ -11,13 +11,17 @@ public class GridCellsGenerator : MonoBehaviour {
 	private Scalar[,,] scalarField;
 	public GridCell[,,] gridCells { get; private set; }
 
+	public float offset;
+	public float coverage;
+
 	private Scalar[,,] GenerateScalarField () {
 		Scalar[,,] scalarField = new Scalar[amountX, amountY, amountZ];
 
 		for (int z = 0; z < amountZ; z++) {
 			for (int y = 0; y < amountY; y++) {
 				for (int x = 0; x < amountX; x++) {
-					scalarField[x, y, z] = new Scalar (new Vector3 (x, y, z), Random.Range (0f, 1f));
+					float perlin = Mathf3D.PerlinNoise3D ((float)x / (amountX - 1) * coverage + offset / (amountX - 1), (float)y / (amountY - 1) * coverage + 0f / (amountY - 1), (float)z / (amountZ - 1) * coverage + 0f / (amountX - 1));
+					scalarField[x, y, z] = new Scalar (new Vector3 (x, y, z), perlin * 2f);
 				}
 			}
 		}
@@ -37,9 +41,9 @@ public class GridCellsGenerator : MonoBehaviour {
 						scalarField[x + 1, y    , z    ].position,
 						scalarField[x    , y    , z    ].position,
 						scalarField[x    , y + 1, z + 1].position,
-						scalarField[x + 1, y    , z + 1].position,
-						scalarField[x + 1, y    , z    ].position,
-						scalarField[x    , y    , z    ].position,
+						scalarField[x + 1, y + 1, z + 1].position,
+						scalarField[x + 1, y + 1, z    ].position,
+						scalarField[x    , y + 1, z    ].position,
 					};
 
 					float[] values = {
@@ -48,9 +52,9 @@ public class GridCellsGenerator : MonoBehaviour {
 						scalarField[x + 1, y    , z    ].value,
 						scalarField[x    , y    , z    ].value,
 						scalarField[x    , y + 1, z + 1].value,
-						scalarField[x + 1, y    , z + 1].value,
-						scalarField[x + 1, y    , z    ].value,
-						scalarField[x    , y    , z    ].value,
+						scalarField[x + 1, y + 1, z + 1].value,
+						scalarField[x + 1, y + 1, z    ].value,
+						scalarField[x    , y + 1, z    ].value,
 					};
 
 					gridCells[x, y, z] = new GridCell (positions, values);
@@ -61,11 +65,14 @@ public class GridCellsGenerator : MonoBehaviour {
 		return gridCells;
 	}
 
-	private void Start () {
+	private void Update () {
+		offset += Time.deltaTime * 4;
+
 		scalarField = GenerateScalarField ();
 		gridCells = GenerateGridCells ();
 	}
 
+	/*
 	private void OnDrawGizmos () {
 		if (scalarField != null) {
 			for (int z = 0; z < amountZ; z++) {
@@ -78,4 +85,5 @@ public class GridCellsGenerator : MonoBehaviour {
 			}
 		}
 	}
+	*/
 }
