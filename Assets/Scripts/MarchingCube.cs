@@ -10,6 +10,8 @@ public class MarchingCube : MonoBehaviour {
 
 	private GridCell gridCell;
 
+	private List<Triangle> trianglesList = new List<Triangle> ();
+
 	public GridCellsGenerator gcg;
 
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
@@ -90,9 +92,17 @@ public class MarchingCube : MonoBehaviour {
 			triangles[ntriang].positions[0] = vertices[Tables.triTable[cubeindex, i]];
 			triangles[ntriang].positions[1] = vertices[Tables.triTable[cubeindex, i + 1]];
 			triangles[ntriang].positions[2] = vertices[Tables.triTable[cubeindex, i + 2]];
-			Debug.DrawLine (triangles[ntriang].positions[0], triangles[ntriang].positions[1]);
-			Debug.DrawLine (triangles[ntriang].positions[1], triangles[ntriang].positions[2]);
-			Debug.DrawLine (triangles[ntriang].positions[2], triangles[ntriang].positions[0]);
+
+			Triangle triangle = new Triangle (
+				new Vector3[] {
+					triangles[ntriang].positions[0],
+					triangles[ntriang].positions[1],
+					triangles[ntriang].positions[2]
+				}
+			);
+
+			trianglesList.Add (triangle);
+
 			ntriang++;
 		}
 
@@ -137,38 +147,27 @@ public class MarchingCube : MonoBehaviour {
 		Debug.DrawLine (gridCell.positions[3], gridCell.positions[2], Color.black);
 		Debug.DrawLine (gridCell.positions[2], gridCell.positions[1], Color.black);
 		Debug.DrawLine (gridCell.positions[1], gridCell.positions[0], Color.black);
-	}
 
-	private void UpdateGridCell () {
-		gridCell.positions = new Vector3[] {
-			transform.position + new Vector3 (0, 0, 1),
-			transform.position + new Vector3 (1, 0, 1),
-			transform.position + new Vector3 (1, 0, 0),
-			transform.position + new Vector3 (0, 0, 0),
-			transform.position + new Vector3 (0, 1, 1),
-			transform.position + new Vector3 (1, 1, 1),
-			transform.position + new Vector3 (1, 1, 0),
-			transform.position + new Vector3 (0, 1, 0)
-		};
+		for (int i = 0; i < trianglesList.Count; i++) {
+			Debug.DrawLine (trianglesList[i].positions[0], trianglesList[i].positions[1], Color.yellow);
+			Debug.DrawLine (trianglesList[i].positions[1], trianglesList[i].positions[2], Color.yellow);
+			Debug.DrawLine (trianglesList[i].positions[2], trianglesList[i].positions[0], Color.yellow);
+		}
 	}
 
 	private void Update () {
-		if (Input.GetKeyDown (KeyCode.Alpha1)) {
-			gridCell = gcg.gridCells[0, 0, 0];
+		if (gcg.gridCells != null) {
+			trianglesList.Clear ();
 
-			UpdateGridCell ();
+			for (int z = 0; z < gcg.amountZ - 1; z++) {
+				for (int y = 0; y < gcg.amountY - 1; y++) {
+					for (int x = 0; x < gcg.amountX - 1; x++) {
+						gridCell = gcg.gridCells[x, y, z];
 
-			Polygonise (gridCell, 0.5f, triangles);
-
-			DrawLines ();
-		}
-
-		if (Input.GetKeyDown (KeyCode.Alpha2)) {
-			gridCell = gcg.gridCells[0, 0, 1];
-
-			UpdateGridCell ();
-
-			Polygonise (gridCell, 0.5f, triangles);
+						Polygonise (gridCell, 0.8f, triangles);
+					}
+				}
+			}
 
 			DrawLines ();
 		}

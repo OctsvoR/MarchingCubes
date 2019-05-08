@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public struct Scalar {
+
 	public Vector3 position;
 	public float value;
 
