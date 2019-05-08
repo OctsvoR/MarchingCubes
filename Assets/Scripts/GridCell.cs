@@ -4,6 +4,11 @@ using UnityEngine;
 
 public struct GridCell {
 
-	public Vector3[] p;
-	public float[] val;
+	public Vector3[] positions;
+	public float[] values;
+
+	public GridCell (Vector3[] positions, float[] values) {
+		this.positions = positions;
+		this.values = values;
+	}
 }

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public struct Triangle {
 
-	public Vector3[] p;
+	public Vector3[] positions;
 }
