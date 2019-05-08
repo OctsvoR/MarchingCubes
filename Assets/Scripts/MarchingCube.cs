@@ -10,9 +10,9 @@ public class MarchingCube : MonoBehaviour {
 
 	private GridCell gridCell;
 
-	private List<Triangle> trianglesList = new List<Triangle> ();
-
 	public GridCellsGenerator gcg;
+
+	public WorldRenderer worldRenderer;
 
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
 		float mu;
@@ -101,7 +101,7 @@ public class MarchingCube : MonoBehaviour {
 				}
 			);
 
-			trianglesList.Add (triangle);
+			worldRenderer.trianglesList.Add (triangle);
 
 			ntriang++;
 		}
@@ -148,16 +148,15 @@ public class MarchingCube : MonoBehaviour {
 		Debug.DrawLine (gridCell.positions[2], gridCell.positions[1], Color.black);
 		Debug.DrawLine (gridCell.positions[1], gridCell.positions[0], Color.black);
 
-		for (int i = 0; i < trianglesList.Count; i++) {
-			Debug.DrawLine (trianglesList[i].positions[0], trianglesList[i].positions[1], Color.yellow);
-			Debug.DrawLine (trianglesList[i].positions[1], trianglesList[i].positions[2], Color.yellow);
-			Debug.DrawLine (trianglesList[i].positions[2], trianglesList[i].positions[0], Color.yellow);
+		for (int i = 0; i < worldRenderer.trianglesList.Count; i++) {
+			Debug.DrawLine (worldRenderer.trianglesList[i].positions[0], worldRenderer.trianglesList[i].positions[1], Color.yellow);
+			Debug.DrawLine (worldRenderer.trianglesList[i].positions[1], worldRenderer.trianglesList[i].positions[2], Color.yellow);
+			Debug.DrawLine (worldRenderer.trianglesList[i].positions[2], worldRenderer.trianglesList[i].positions[0], Color.yellow);
 		}
 	}
 
 	private void Update () {
 		if (gcg.gridCells != null) {
-			trianglesList.Clear ();
 
 			for (int z = 0; z < gcg.amountZ - 1; z++) {
 				for (int y = 0; y < gcg.amountY - 1; y++) {
@@ -170,6 +169,10 @@ public class MarchingCube : MonoBehaviour {
 			}
 
 			DrawLines ();
+
+			worldRenderer.Render ();
+
+			worldRenderer.trianglesList.Clear ();
 		}
 	}
 
