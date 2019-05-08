@@ -8,7 +8,9 @@ public class MarchingCube : MonoBehaviour {
 	private Vector3[] vertices = new Vector3[12];
 	private Triangle[] triangles = new Triangle[5];
 
-	private GridCell gridCell = new GridCell ();
+	private GridCell gridCell;
+
+	public GridCellsGenerator gcg;
 
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
 		float mu;
@@ -151,11 +153,25 @@ public class MarchingCube : MonoBehaviour {
 	}
 
 	private void Update () {
-		UpdateGridCell ();
+		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+			gridCell = gcg.gridCells[0, 0, 0];
 
-		Polygonise (gridCell, 0.5f, triangles);
+			UpdateGridCell ();
 
-		DrawLines ();
+			Polygonise (gridCell, 0.5f, triangles);
+
+			DrawLines ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			gridCell = gcg.gridCells[0, 0, 1];
+
+			UpdateGridCell ();
+
+			Polygonise (gridCell, 0.5f, triangles);
+
+			DrawLines ();
+		}
 	}
 
 	private void Init () {

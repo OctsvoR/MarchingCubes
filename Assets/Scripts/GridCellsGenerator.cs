@@ -9,7 +9,7 @@ public class GridCellsGenerator : MonoBehaviour {
 	public int amountZ = 10;
 
 	private Scalar[,,] scalarField;
-	private GridCell[,,] gridCells;
+	public GridCell[,,] gridCells { get; private set; }
 
 	private Scalar[,,] GenerateScalarField () {
 		Scalar[,,] scalarField = new Scalar[amountX, amountY, amountZ];

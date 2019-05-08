@@ -198,6 +198,11 @@ PrefabInstance:
       propertyPath: tool
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2045089647531175073, guid: 02ee1f14848acc941b50dbe9775c609c,
+        type: 3}
+      propertyPath: gcg
+      value: 
+      objectReference: {fileID: 1494450927}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -481,7 +486,7 @@ GameObject:
   - component: {fileID: 1494450928}
   - component: {fileID: 1494450927}
   m_Layer: 0
-  m_Name: ScalarField
+  m_Name: GridCellsGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -499,9 +504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d66e8da1b3368446b5cfa4eff486b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 10
-  sizeY: 10
-  sizeZ: 10
+  amountX: 10
+  amountY: 10
+  amountZ: 10
 --- !u!4 &1494450928
 Transform:
   m_ObjectHideFlags: 0
