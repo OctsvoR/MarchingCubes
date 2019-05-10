@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LowLevelRenderer : MonoBehaviour {
 
-	public Vector3[] vertices;
+	public Triangle[] triangles;
 
 	static Material lineMaterial;
 	static void CreateLineMaterial () {
@@ -17,21 +18,38 @@ public class LowLevelRenderer : MonoBehaviour {
 		}
 	}
 
+	private void DrawLine (Vector3 v1, Vector3 v2, Color color) {
+		GL.Color (color);
+		GL.Vertex (v1);
+		GL.Vertex (v2);
+	}
+
 	public void OnRenderObject () {
 		CreateLineMaterial ();
 		lineMaterial.SetPass (0);
 
-		GL.PushMatrix ();
-		GL.MultMatrix (transform.localToWorldMatrix);
-
-		for (int i = 0; i < vertices.Length - 1; i++) {
-			GL.Begin (GL.LINES);
-			GL.Color (new Color (1, 1, 1, 0.8f));
-			GL.Vertex (vertices[i]);
-			GL.Vertex (vertices[i + 1]);
-			GL.End ();
+		GL.Begin (GL.LINES);
+		for (int i = 0; i < triangles.Length; i++) {
+			GL.Color (Color.magenta);
+			GL.Vertex (triangles[i].positions[0]);
+			GL.Vertex (triangles[i].positions[1]);
 		}
+		GL.End ();
 
-		GL.PopMatrix ();
+		GL.Begin (GL.LINES);
+		for (int i = 0; i < triangles.Length; i++) {
+			GL.Color (Color.magenta);
+			GL.Vertex (triangles[i].positions[1]);
+			GL.Vertex (triangles[i].positions[2]);
+		}
+		GL.End ();
+
+		GL.Begin (GL.LINES);
+		for (int i = 0; i < triangles.Length; i++) {
+			GL.Color (Color.magenta);
+			GL.Vertex (triangles[i].positions[2]);
+			GL.Vertex (triangles[i].positions[0]);
+		}
+		GL.End ();
 	}
 }

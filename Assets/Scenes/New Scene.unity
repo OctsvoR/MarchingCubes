@@ -208,6 +208,11 @@ PrefabInstance:
       propertyPath: limit
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2045089647531175073, guid: 02ee1f14848acc941b50dbe9775c609c,
+        type: 3}
+      propertyPath: llr
+      value: 
+      objectReference: {fileID: 931082107}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -346,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03582d0b4e662fb4c8f0deb280ae9b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  llr: {fileID: 931082107}
 --- !u!23 &931082104
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -414,21 +420,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 931082102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d28ecdc5c9588842a1d29c35cc8c047, type: 3}
+  m_Script: {fileID: 11500000, guid: a7d4400693f679a4e9e93492364297a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  render_mesh_normaly: 1
-  render_lines_1st: 0
-  render_lines_2nd: 0
-  render_lines_3rd: 0
-  lineColor: {r: 0, g: 1, b: 1, a: 1}
-  backgroundColor: {r: 0, g: 0.5, b: 0.5, a: 1}
-  ZWrite: 1
-  AWrite: 1
-  blend: 1
-  lineWidth: 3
-  size: 0
-  lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &2124095725
 GameObject:
   m_ObjectHideFlags: 0
