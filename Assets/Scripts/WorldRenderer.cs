@@ -35,7 +35,7 @@ public class WorldRenderer : MonoBehaviour {
 
 		mesh.RecalculateNormals ();
 
-		GetComponent<LowLevelRenderer>().vertices = mesh.vertices;
+		GetComponent<LowLevelRenderer>().vertices = mesh.vertices;//
 
 		System.GC.Collect ();
 	}
