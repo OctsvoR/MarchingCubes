@@ -118,6 +118,7 @@ public class MarchingCube : MonoBehaviour {
 	}
 
 	private void DrawLines () {
+		/*
 		Debug.DrawLine (gridCell.positions[3], gridCell.positions[7], Color.black);
 		Debug.DrawLine (gridCell.positions[7], gridCell.positions[6], Color.black);
 		Debug.DrawLine (gridCell.positions[6], gridCell.positions[2], Color.black);
@@ -153,6 +154,7 @@ public class MarchingCube : MonoBehaviour {
 			Debug.DrawLine (worldRenderer.trianglesList[i].positions[1], worldRenderer.trianglesList[i].positions[2], Color.yellow);
 			Debug.DrawLine (worldRenderer.trianglesList[i].positions[2], worldRenderer.trianglesList[i].positions[0], Color.yellow);
 		}
+		*/
 	}
 
 	private void Update () {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class WorldRenderer : MonoBehaviour {
 
@@ -29,5 +30,7 @@ public class WorldRenderer : MonoBehaviour {
 		mesh.triangles = triangles;
 
 		mesh.RecalculateNormals ();
+
+		System.GC.Collect ();
 	}
 }
