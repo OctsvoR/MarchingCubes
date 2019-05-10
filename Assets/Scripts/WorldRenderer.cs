@@ -14,6 +14,7 @@ public class WorldRenderer : MonoBehaviour {
 	public LowLevelRenderer llr;
 
 	public void Render () {
+		/*
 		Mesh mesh = new Mesh ();
 		GetComponent<MeshFilter> ().mesh = mesh;
 
@@ -35,12 +36,13 @@ public class WorldRenderer : MonoBehaviour {
 		mesh.triangles = triangles;
 		mesh.uv = uv;
 
+		mesh.RecalculateNormals ();
+		*/
+
 		Triangle[] ts = new Triangle[trianglesList.Count];
 		for (int i = 0; i < trianglesList.Count; i++) {
 			ts[i] = trianglesList[i];
 		}
 		llr.triangles = ts;
-
-		mesh.RecalculateNormals ();
 	}
 }

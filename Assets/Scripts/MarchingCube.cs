@@ -41,14 +41,16 @@ public class MarchingCube : MonoBehaviour {
 		int cubeindex;
 
 		cubeindex = 0;
-		if (grid.values[0] < isolevel) cubeindex |= 1;
-		if (grid.values[1] < isolevel) cubeindex |= 2;
-		if (grid.values[2] < isolevel) cubeindex |= 4;
-		if (grid.values[3] < isolevel) cubeindex |= 8;
-		if (grid.values[4] < isolevel) cubeindex |= 16;
-		if (grid.values[5] < isolevel) cubeindex |= 32;
-		if (grid.values[6] < isolevel) cubeindex |= 64;
-		if (grid.values[7] < isolevel) cubeindex |= 128;
+		if (grid.values != null) {
+			if (grid.values[0] < isolevel) cubeindex |= 1;
+			if (grid.values[1] < isolevel) cubeindex |= 2;
+			if (grid.values[2] < isolevel) cubeindex |= 4;
+			if (grid.values[3] < isolevel) cubeindex |= 8;
+			if (grid.values[4] < isolevel) cubeindex |= 16;
+			if (grid.values[5] < isolevel) cubeindex |= 32;
+			if (grid.values[6] < isolevel) cubeindex |= 64;
+			if (grid.values[7] < isolevel) cubeindex |= 128;
+		}
 
 		if (Tables.edgeTable[cubeindex] == 0)
 			return (0);

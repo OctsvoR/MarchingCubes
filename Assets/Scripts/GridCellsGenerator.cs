@@ -9,7 +9,7 @@ public class GridCellsGenerator : MonoBehaviour {
 	public int amountZ = 10;
 
 	private Scalar[,,] scalarField;
-	public GridCell[,,] gridCells { get; set; }
+	public GridCell[,,] gridCells;
 
 	public float offset;
 	public float coverage;
@@ -18,8 +18,6 @@ public class GridCellsGenerator : MonoBehaviour {
 	public int height;
 
 	private Scalar[,,] GenerateCavernsScalarField () {
-		Scalar[,,] scalarField = new Scalar[amountX, amountY, amountZ];
-
 		for (int z = 0; z < amountZ; z++) {
 			for (int y = 0; y < amountY; y++) {
 				for (int x = 0; x < amountX; x++) {
@@ -41,9 +39,7 @@ public class GridCellsGenerator : MonoBehaviour {
 		return scalarField;
 	}
 
-	private Scalar[,,] GenerateTerrainScalarField () {
-		Scalar[,,] scalarField = new Scalar[amountX, amountY, amountZ];
-
+	private void GenerateTerrainScalarField () {
 		for (int z = 0; z < amountZ; z++) {
 			for (int y = 0; y < amountY; y++) {
 				for (int x = 0; x < amountX; x++) {
@@ -62,13 +58,9 @@ public class GridCellsGenerator : MonoBehaviour {
 				}
 			}
 		}
-
-		return scalarField;
 	}
 
 	private Scalar[,,] GenerateScalarField () {
-		Scalar[,,] scalarField = new Scalar[amountX, amountY, amountZ];
-
 		for (int z = 0; z < amountZ; z++) {
 			for (int y = 0; y < amountY; y++) {
 				for (int x = 0; x < amountX; x++) {
@@ -85,9 +77,7 @@ public class GridCellsGenerator : MonoBehaviour {
 		return scalarField;
 	}
 
-	private GridCell[,,] GenerateGridCells () {
-		GridCell[,,] gridCells = new GridCell[amountX - 1, amountY - 1, amountZ - 1];
-
+	private void GenerateGridCells () {
 		for (int z = 0; z < amountZ - 1; z++) {
 			for (int y = 0; y < amountY - 1; y++) {
 				for (int x = 0; x < amountX - 1; x++) {
@@ -117,15 +107,18 @@ public class GridCellsGenerator : MonoBehaviour {
 				}
 			}
 		}
-
-		return gridCells;
 	}
 
 	private void Update () {
 		offset += Time.deltaTime * 4;
 
-		scalarField = GenerateTerrainScalarField ();
-		gridCells = GenerateGridCells ();
+		GenerateTerrainScalarField ();
+		GenerateGridCells ();
+	}
+
+	private void Awake () {
+		scalarField = new Scalar[amountX, amountY, amountZ];
+		gridCells = new GridCell[amountX - 1, amountY - 1, amountZ - 1];
 	}
 
 	private void OnDrawGizmos () {

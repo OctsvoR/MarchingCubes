@@ -13,7 +13,7 @@ public class LowLevelRenderer : MonoBehaviour {
 			lineMaterial.hideFlags = HideFlags.HideAndDontSave;
 			lineMaterial.SetInt ("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
 			lineMaterial.SetInt ("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-			lineMaterial.SetInt ("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+			lineMaterial.SetInt ("_Cull", (int)UnityEngine.Rendering.CullMode.Front);
 			lineMaterial.SetInt ("_ZWrite", 0);
 		}
 	}
