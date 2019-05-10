@@ -203,6 +203,11 @@ PrefabInstance:
       propertyPath: worldRenderer
       value: 
       objectReference: {fileID: 931082103}
+    - target: {fileID: 2045089647531175073, guid: 02ee1f14848acc941b50dbe9775c609c,
+        type: 3}
+      propertyPath: limit
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -289,13 +294,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d66e8da1b3368446b5cfa4eff486b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountX: 20
-  amountY: 20
-  amountZ: 20
+  amountX: 10
+  amountY: 10
+  amountZ: 10
   offset: 0
   coverage: 3
   height: 10
-  boi: 0
 --- !u!4 &929200214
 Transform:
   m_ObjectHideFlags: 0
@@ -322,6 +326,7 @@ GameObject:
   - component: {fileID: 931082105}
   - component: {fileID: 931082104}
   - component: {fileID: 931082103}
+  - component: {fileID: 931082107}
   m_Layer: 0
   m_Name: Renderer
   m_TagString: Untagged
@@ -400,6 +405,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &931082107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931082102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d28ecdc5c9588842a1d29c35cc8c047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  render_mesh_normaly: 1
+  render_lines_1st: 0
+  render_lines_2nd: 0
+  render_lines_3rd: 0
+  lineColor: {r: 0, g: 1, b: 1, a: 1}
+  backgroundColor: {r: 0, g: 0.5, b: 0.5, a: 1}
+  ZWrite: 1
+  AWrite: 1
+  blend: 1
+  lineWidth: 3
+  size: 0
+  lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &2124095725
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +465,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -476,7 +505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2124095725}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 10, y: 30, z: -10}
+  m_LocalPosition: {x: 5, y: 15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

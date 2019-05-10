@@ -14,6 +14,9 @@ public class MarchingCube : MonoBehaviour {
 
 	public WorldRenderer worldRenderer;
 
+	[Space ()]
+	public float limit = 0.5f;
+
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
 		float mu;
 		Vector3 p;
@@ -165,7 +168,7 @@ public class MarchingCube : MonoBehaviour {
 					for (int x = 0; x < gcg.amountX - 1; x++) {
 						gridCell = gcg.gridCells[x, y, z];
 
-						Polygonise (gridCell, 0.8f, triangles);
+						Polygonise (gridCell, limit, triangles);
 					}
 				}
 			}
