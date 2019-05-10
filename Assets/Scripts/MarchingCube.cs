@@ -21,11 +21,11 @@ public class MarchingCube : MonoBehaviour {
 		float mu;
 		Vector3 p;
 
-		if (Mathf.Abs (isolevel - valp1) < 0.00001)
+		if (Mathf.Abs (isolevel - valp1) < 0.00001f)
 			return (p1);
-		if (Mathf.Abs (isolevel - valp2) < 0.00001)
+		if (Mathf.Abs (isolevel - valp2) < 0.00001f)
 			return (p2);
-		if (Mathf.Abs (valp1 - valp2) < 0.00001)
+		if (Mathf.Abs (valp1 - valp2) < 0.00001f)
 			return (p1);
 
 		mu = (isolevel - valp1) / (valp2 - valp1);
