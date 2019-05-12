@@ -153,7 +153,6 @@ public class GridCellsGenerator : MonoBehaviour {
 			}
 		}
 	}
-
 	/// <summary>
 	/// Generates a digger sphere.
 	/// </summary>
@@ -163,21 +162,31 @@ public class GridCellsGenerator : MonoBehaviour {
 		for (int z = -radius; z < radius; z++) {
 			for (int y = -radius; y < radius; y++) {
 				for (int x = -radius; x < radius; x++) {
+					Vector3 delta = position - new Vector3 (x, y, z);
 					if (Vector3.Distance (position, new Vector3 (position.x + x, position.y + y, position.z + z)) <= radius) {
-						scalarField [
-							Mathf.RoundToInt (position.x + x),
-							Mathf.RoundToInt (position.y + y),
-							Mathf.RoundToInt (position.z + z)
-						]
-						=
-						new Scalar (
-							new Vector3 (
+						if (
+							Mathf.RoundToInt (position.x + x) < amountX &&
+							Mathf.RoundToInt (position.y + y) < amountY &&
+							Mathf.RoundToInt (position.z + z) < amountZ &&
+							Mathf.RoundToInt (position.x + x) >= 0 &&
+							Mathf.RoundToInt (position.y + y) >= 0 &&
+							Mathf.RoundToInt (position.z + z) >= 0
+						) {
+							scalarField[
 								Mathf.RoundToInt (position.x + x),
 								Mathf.RoundToInt (position.y + y),
 								Mathf.RoundToInt (position.z + z)
-							),
-							0f
-						);
+							]
+							=
+							new Scalar (
+								new Vector3 (
+									Mathf.RoundToInt (position.x + x),
+									Mathf.RoundToInt (position.y + y),
+									Mathf.RoundToInt (position.z + z)
+								),
+								0f
+							);
+						}
 					}
 				}
 			}
@@ -187,7 +196,7 @@ public class GridCellsGenerator : MonoBehaviour {
 	private void Update () {
 		//offset += 0;
 
-		GenerateDigger (diggingTool.position, 2);
+		GenerateDigger (diggingTool.position, 3);
 		GenerateGridCells ();
 	}
 
