@@ -14,7 +14,7 @@ public class MarchingCube : MonoBehaviour {
 
 	public WorldRenderer worldRenderer;
 
-	[Space ()]
+	[Space (), Range (0f, 1f)]
 	public float limit = 0.5f;
 
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
@@ -128,32 +128,26 @@ public class MarchingCube : MonoBehaviour {
 		Debug.DrawLine (gridCell.positions[7], gridCell.positions[6], Color.black);
 		Debug.DrawLine (gridCell.positions[6], gridCell.positions[2], Color.black);
 		Debug.DrawLine (gridCell.positions[2], gridCell.positions[3], Color.black);
-
 		Debug.DrawLine (gridCell.positions[2], gridCell.positions[6], Color.black);
 		Debug.DrawLine (gridCell.positions[6], gridCell.positions[5], Color.black);
 		Debug.DrawLine (gridCell.positions[5], gridCell.positions[1], Color.black);
 		Debug.DrawLine (gridCell.positions[1], gridCell.positions[2], Color.black);
-
 		Debug.DrawLine (gridCell.positions[1], gridCell.positions[5], Color.black);
 		Debug.DrawLine (gridCell.positions[5], gridCell.positions[4], Color.black);
 		Debug.DrawLine (gridCell.positions[4], gridCell.positions[0], Color.black);
 		Debug.DrawLine (gridCell.positions[0], gridCell.positions[1], Color.black);
-
 		Debug.DrawLine (gridCell.positions[0], gridCell.positions[4], Color.black);
 		Debug.DrawLine (gridCell.positions[4], gridCell.positions[7], Color.black);
 		Debug.DrawLine (gridCell.positions[7], gridCell.positions[3], Color.black);
 		Debug.DrawLine (gridCell.positions[3], gridCell.positions[0], Color.black);
-
 		Debug.DrawLine (gridCell.positions[7], gridCell.positions[4], Color.black);
 		Debug.DrawLine (gridCell.positions[4], gridCell.positions[5], Color.black);
 		Debug.DrawLine (gridCell.positions[5], gridCell.positions[6], Color.black);
 		Debug.DrawLine (gridCell.positions[6], gridCell.positions[7], Color.black);
-
 		Debug.DrawLine (gridCell.positions[0], gridCell.positions[3], Color.black);
 		Debug.DrawLine (gridCell.positions[3], gridCell.positions[2], Color.black);
 		Debug.DrawLine (gridCell.positions[2], gridCell.positions[1], Color.black);
 		Debug.DrawLine (gridCell.positions[1], gridCell.positions[0], Color.black);
-
 		for (int i = 0; i < worldRenderer.trianglesList.Count; i++) {
 			Debug.DrawLine (worldRenderer.trianglesList[i].positions[0], worldRenderer.trianglesList[i].positions[1], Color.yellow);
 			Debug.DrawLine (worldRenderer.trianglesList[i].positions[1], worldRenderer.trianglesList[i].positions[2], Color.yellow);

@@ -1,11 +1,8 @@
 ﻿#pragma kernel CSMain
 
-struct Triangle {
-	float3 v0;
-	float3 v1;
-	float3 v2;
-};
+// The inputs are: GridCell, isolevel
 
+// INPUT
 float3 point0;
 float3 point1;
 float3 point2;
@@ -23,6 +20,15 @@ float v4;
 float v5;
 float v6;
 float v7;
+
+float level;
+
+// OUTPUT
+struct Triangle {
+	float3 v0;
+	float3 v1;
+	float3 v2;
+};
 
 AppendStructuredBuffer<Triangle> trianglesList;
 RWStructuredBuffer<float3> vertices;
@@ -418,9 +424,8 @@ int polygonise (float isolevel, Triangle triangles[5]) {
 [numthreads(8,8,8)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
-
 	Triangle triangles[5];
-    polygonise (0.5f, triangles);
+    polygonise (level, triangles);
 }
 
 
