@@ -34,7 +34,8 @@ public class GridCellsGenerator : MonoBehaviour {
 
 	/// <summary>
 	/// The noise map offset at x axis.
-	/// </summary>
+	/// </summary>>
+	[Space ()]
 	public float offset;
 
 	/// <summary>
@@ -45,7 +46,7 @@ public class GridCellsGenerator : MonoBehaviour {
 	/// <summary>
 	/// The height of our terrain surface.
 	/// </summary>
-	[Range (0f, 8f)]
+	[Space (), Range (0f, 8f)]
 	public int height;
 
 	/// <summary>
@@ -54,8 +55,11 @@ public class GridCellsGenerator : MonoBehaviour {
 	[Range (0f, 5f)]
 	public int amplitude;
 
-	public Transform digger;
-
+	/// <summary>
+	/// A reference to the digging tool.
+	/// </summary>
+	[Space ()]
+	public Transform diggingTool;
 
 	/// <summary>
 	/// Generates a scalar field of caves.
@@ -150,27 +154,58 @@ public class GridCellsGenerator : MonoBehaviour {
 		}
 	}
 
-	private void GenerateDigger () {
-			scalarField[Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z)] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z)), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z) + 1] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z) + 1), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z)] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z)), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z) + 1] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x), Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z) + 1), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z)] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z)), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z) + 1] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y), Mathf.RoundToInt (digger.position.z) + 1), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z)] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z)), 0f);
-			scalarField[Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z) + 1] = new Scalar (new Vector3 (Mathf.RoundToInt (digger.position.x) + 1, Mathf.RoundToInt (digger.position.y) + 1, Mathf.RoundToInt (digger.position.z) + 1), 0f);
+	/// <summary>
+	/// Generates a digger sphere.
+	/// </summary>
+	/// <param name="position">The centre point of the digger sphere.</param>
+	/// <param name="radius">The radius of the digger sphere.</param>
+	private void GenerateDigger (Vector3 position, int radius) {
+		for (int z = -radius; z < radius; z++) {
+			for (int y = -radius; y < radius; y++) {
+				for (int x = -radius; x < radius; x++) {
+					if (Vector3.Distance (position, new Vector3 (position.x + x, position.y + y, position.z + z)) <= radius) {
+						scalarField [
+							Mathf.RoundToInt (position.x + x),
+							Mathf.RoundToInt (position.y + y),
+							Mathf.RoundToInt (position.z + z)
+						]
+						=
+						new Scalar (
+							new Vector3 (
+								Mathf.RoundToInt (position.x + x),
+								Mathf.RoundToInt (position.y + y),
+								Mathf.RoundToInt (position.z + z)
+							),
+							0f
+						);
+					}
+				}
+			}
+		}
 	}
 
 	private void Update () {
-		offset += 0;
+		//offset += 0;
 
-		GenerateTerrainScalarField ();
-		GenerateDigger ();
+		GenerateDigger (diggingTool.position, 2);
 		GenerateGridCells ();
+	}
+
+	private void Start () {
+		GenerateTerrainScalarField ();
 	}
 
 	private void Awake () {
 		scalarField = new Scalar[amountX, amountY, amountZ];
+
+		for (int z = 0; z < amountZ; z++) {
+			for (int y = 0; y < amountY; y++) {
+				for (int x = 0; x < amountX; x++) {
+					scalarField[x, y, z] = new Scalar (new Vector3 (x, y, z), 1f);
+				}
+			}
+		}
+
 		gridCells = new GridCell[amountX - 1, amountY - 1, amountZ - 1];
 	}
 

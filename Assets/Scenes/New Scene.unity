@@ -311,9 +311,9 @@ MonoBehaviour:
   amountZ: 10
   offset: 0
   coverage: 3
-  height: 5
+  height: 4
   amplitude: 2
-  digger: {fileID: 1415021357}
+  diggingTool: {fileID: 1415021357}
 --- !u!4 &929200214
 Transform:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1415021357}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DiggingTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -456,7 +456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415021356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 5, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
