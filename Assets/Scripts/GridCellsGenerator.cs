@@ -31,13 +31,13 @@ public class GridCellsGenerator : MonoBehaviour {
 	/// A 3D array of grid cells.
 	/// </summary>
 	public GridCell[,,] gridCells;
-	private GridCell[,,] previousGridCells;
 
 	/// <summary>
-	/// The noise map offset at x axis.
+	/// The noise map offset.
 	/// </summary>>
 	[Space ()]
-	public float offset;
+	public float offsetX;
+	public float offsetZ;
 
 	/// <summary>
 	/// Determines how far does our terrain cover noise map.
@@ -70,9 +70,9 @@ public class GridCellsGenerator : MonoBehaviour {
 			for (int y = 0; y < amountY + 1; y++) {
 				for (int x = 0; x < amountX + 1; x++) {
 					float perlin = Mathf3D.PerlinNoise3D (
-						(float)x * (1f / (amountX)) * coverage + offset / (amountX),
+						(float)x * (1f / (amountX)) * coverage + offsetX / (amountX),
 						(float)y * (1f / (amountY)) * coverage + 0f / (amountY),
-						(float)z * (1f / (amountZ)) * coverage + 0f / (amountZ)
+						(float)z * (1f / (amountZ)) * coverage + offsetZ / (amountZ)
 					);
 
 					if (y <= height - 1) {
@@ -93,8 +93,8 @@ public class GridCellsGenerator : MonoBehaviour {
 			for (int y = 0; y < amountY + 1; y++) {
 				for (int x = 0; x < amountX + 1; x++) {
 					float perlin = Mathf.PerlinNoise (
-						(float)x * (1f / (amountX)) * coverage + offset / (amountX),
-						(float)z * (1f / (amountZ)) * coverage + 0f / (amountZ)
+						(float)x * (1f / (amountX)) * coverage + offsetX / (amountX),
+						(float)z * (1f / (amountZ)) * coverage + offsetZ / (amountZ)
 					);
 
 					float output = perlin;
@@ -122,38 +122,34 @@ public class GridCellsGenerator : MonoBehaviour {
 	/// Generates grid cells.
 	/// </summary>
 	private void GenerateGridCells () {
-		if (gridCells != previousGridCells) {
-			for (int z = 0; z < amountZ; z++) {
-				for (int y = 0; y < amountY; y++) {
-					for (int x = 0; x < amountX; x++) {
-						Vector3[] positions = {
-							scalarField[x    , y    , z + 1].position,
-							scalarField[x + 1, y    , z + 1].position,
-							scalarField[x + 1, y    , z    ].position,
-							scalarField[x    , y    , z    ].position,
-							scalarField[x    , y + 1, z + 1].position,
-							scalarField[x + 1, y + 1, z + 1].position,
-							scalarField[x + 1, y + 1, z    ].position,
-							scalarField[x    , y + 1, z    ].position,
-						};
+		for (int z = 0; z < amountZ; z++) {
+			for (int y = 0; y < amountY; y++) {
+				for (int x = 0; x < amountX; x++) {
+					Vector3[] positions = {
+						scalarField[x    , y    , z + 1].position,
+						scalarField[x + 1, y    , z + 1].position,
+						scalarField[x + 1, y    , z    ].position,
+						scalarField[x    , y    , z    ].position,
+						scalarField[x    , y + 1, z + 1].position,
+						scalarField[x + 1, y + 1, z + 1].position,
+						scalarField[x + 1, y + 1, z    ].position,
+						scalarField[x    , y + 1, z    ].position
+					};
 
-						float[] values = {
-							scalarField[x    , y    , z + 1].value,
-							scalarField[x + 1, y    , z + 1].value,
-							scalarField[x + 1, y    , z    ].value,
-							scalarField[x    , y    , z    ].value,
-							scalarField[x    , y + 1, z + 1].value,
-							scalarField[x + 1, y + 1, z + 1].value,
-							scalarField[x + 1, y + 1, z    ].value,
-							scalarField[x    , y + 1, z    ].value,
-						};
+					float[] values = {
+						scalarField[x    , y    , z + 1].value,
+						scalarField[x + 1, y    , z + 1].value,
+						scalarField[x + 1, y    , z    ].value,
+						scalarField[x    , y    , z    ].value,
+						scalarField[x    , y + 1, z + 1].value,
+						scalarField[x + 1, y + 1, z + 1].value,
+						scalarField[x + 1, y + 1, z    ].value,
+						scalarField[x    , y + 1, z    ].value
+					};
 
-						gridCells[x, y, z] = new GridCell (positions, values);
-					}
+					gridCells[x, y, z] = new GridCell (positions, values);
 				}
 			}
-
-			previousGridCells = gridCells;
 		}
 	}
 	/// <summary>
@@ -196,8 +192,16 @@ public class GridCellsGenerator : MonoBehaviour {
 	}
 
 	private void Update () {
-		GenerateDigger (diggingTool.position, 1);
-		GenerateGridCells ();
+		float distance = Vector3.Distance (diggingTool.position, transform.position + new Vector3 (amountX, 0, amountZ) * 0.5f);
+		MarchingCube marchingCube = transform.parent.GetComponent<MarchingCube> ();
+
+		if (distance <= 14.1f) {
+			GenerateDigger (diggingTool.position, 1);
+			GenerateGridCells ();
+			marchingCube.doMarch = true;
+		} else {
+			marchingCube.doMarch = false;
+		}
 	}
 
 	private void Start () {
@@ -222,19 +226,6 @@ public class GridCellsGenerator : MonoBehaviour {
 			for (int y = 0; y < amountY; y++) {
 				for (int x = 0; x < amountX; x++) {
 					gridCells[x, y, z] = new GridCell {
-						positions = new Vector3[8],
-						values = new float[8]
-					};
-				}
-			}
-		}
-
-		previousGridCells = new GridCell[amountX, amountY, amountZ];
-
-		for (int z = 0; z < amountZ; z++) {
-			for (int y = 0; y < amountY; y++) {
-				for (int x = 0; x < amountX; x++) {
-					previousGridCells[x, y, z] = new GridCell {
 						positions = new Vector3[8],
 						values = new float[8]
 					};

@@ -17,6 +17,9 @@ public class MarchingCube : MonoBehaviour {
 	[Space (), Range (0f, 1f)]
 	public float limit = 0.5f;
 
+	[HideInInspector]
+	public bool doMarch;
+
 	private Vector3 VertexInterp (float isolevel, Vector3 p1, Vector3 p2, float valp1, float valp2) {
 		float mu;
 		Vector3 p;
@@ -157,23 +160,24 @@ public class MarchingCube : MonoBehaviour {
 	}
 
 	private void Update () {
-		if (gcg.gridCells != null) {
+		if (doMarch) {
+			if (gcg.gridCells != null) {
+				for (int z = 0; z < gcg.amountZ; z++) {
+					for (int y = 0; y < gcg.amountY; y++) {
+						for (int x = 0; x < gcg.amountX; x++) {
+							gridCell = gcg.gridCells[x, y, z];
 
-			for (int z = 0; z < gcg.amountZ; z++) {
-				for (int y = 0; y < gcg.amountY; y++) {
-					for (int x = 0; x < gcg.amountX; x++) {
-						gridCell = gcg.gridCells[x, y, z];
-
-						Polygonise (gridCell, limit, triangles);
+							Polygonise (gridCell, limit, triangles);
+						}
 					}
 				}
+
+				DrawLines ();
+
+				worldRenderer.Render ();
+
+				worldRenderer.trianglesList.Clear ();
 			}
-
-			DrawLines ();
-
-			worldRenderer.Render ();
-
-			worldRenderer.trianglesList.Clear ();
 		}
 	}
 

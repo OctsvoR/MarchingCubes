@@ -38,7 +38,7 @@ public class WorldRenderer : MonoBehaviour {
 	/// </summary>
 	public LowLevelRenderer lowLevelRenderer;
 
-	private bool hasFirstRendered;
+	private Mesh mesh;
 
 	/// <summary>
 	/// Renders the generated terrain using wireframe.
@@ -57,36 +57,18 @@ public class WorldRenderer : MonoBehaviour {
 	/// Renders the generated terrain.
 	/// </summary>
 	public void Render () {
-		if (trianglesList.Count > 0 && !hasFirstRendered) {
-			meshVertices = new Vector3[trianglesList.Count * 3];
-			meshTriangles = new int[trianglesList.Count * 3];
-			meshUV = new Vector2[trianglesList.Count * 3];
+		meshVertices = new Vector3[trianglesList.Count * 3];
+		meshTriangles = new int[trianglesList.Count * 3];
+		meshUV = new Vector2[trianglesList.Count * 3];
 
-			previousMeshVertices = new Vector3[trianglesList.Count * 3];
-			previousMeshTriangles = new int[trianglesList.Count * 3];
-			previousMeshUV = new Vector2[trianglesList.Count * 3];
-
-			hasFirstRendered = true;
-		}
-
-		if (meshVertices != previousMeshVertices || meshTriangles != previousMeshTriangles || meshUV != previousMeshUV) {
-			meshVertices = new Vector3[trianglesList.Count * 3];
-			meshTriangles = new int[trianglesList.Count * 3];
-			meshUV = new Vector2[trianglesList.Count * 3];
-
-			previousMeshVertices = meshVertices;
-			previousMeshTriangles = meshTriangles;
-			previousMeshUV = meshUV;
-		}
-
-		Mesh mesh = new Mesh ();
+		mesh = new Mesh ();
 		GetComponent<MeshFilter> ().mesh = mesh;
 
 		for (int i = 0, k = 0; i < trianglesList.Count; i++) {
 			for (int j = 0; j < 3; j++, k++) {
-					meshVertices[k] = trianglesList[i].positions[j] - transform.position;
-					meshTriangles[k] = k;
-					meshUV[k] = meshVertices[k];
+				meshVertices[k] = trianglesList[i].positions[j] - transform.position;
+				meshTriangles[k] = k;
+				meshUV[k] = meshVertices[k];
 			}
 		}
 
