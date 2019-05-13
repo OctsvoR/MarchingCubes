@@ -448,7 +448,7 @@ PrefabInstance:
     - target: {fileID: 2045089647531175074, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
@@ -1019,7 +1019,7 @@ MonoBehaviour:
   amountX: 10
   amountY: 10
   amountZ: 10
-  offset: 54
+  offset: 60
   coverage: 3
   height: 4
   amplitude: 2
