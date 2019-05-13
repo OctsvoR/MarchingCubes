@@ -90,12 +90,12 @@ public class GridCellsGenerator : MonoBehaviour {
 	/// Generates a scalar field of terrain.
 	/// </summary>
 	private void GenerateTerrainScalarField () {
-		for (int z = 0; z < amountZ; z++) {
-			for (int y = 0; y < amountY; y++) {
-				for (int x = 0; x < amountX; x++) {
+		for (int z = 0; z < amountZ + 1; z++) {
+			for (int y = 0; y < amountY + 1; y++) {
+				for (int x = 0; x < amountX + 1; x++) {
 					float perlin = Mathf.PerlinNoise (
-						(float)x * (1f / (amountX - 1)) * coverage + offset / (amountX - 1),
-						(float)z * (1f / (amountZ - 1)) * coverage + 0f / (amountZ - 1)
+						(float)x * (1f / (amountX)) * coverage + offset / (amountX),
+						(float)z * (1f / (amountZ)) * coverage + 0f / (amountZ)
 					);
 
 					float output = perlin;
@@ -123,9 +123,9 @@ public class GridCellsGenerator : MonoBehaviour {
 	/// Generates grid cells.
 	/// </summary>
 	private void GenerateGridCells () {
-		for (int z = 0; z < amountZ - 1; z++) {
-			for (int y = 0; y < amountY - 1; y++) {
-				for (int x = 0; x < amountX - 1; x++) {
+		for (int z = 0; z < amountZ; z++) {
+			for (int y = 0; y < amountY; y++) {
+				for (int x = 0; x < amountX; x++) {
 					Vector3[] positions = {
 						scalarField[x    , y    , z + 1].position,
 						scalarField[x + 1, y    , z + 1].position,
@@ -165,9 +165,9 @@ public class GridCellsGenerator : MonoBehaviour {
 					Vector3 delta = position + new Vector3 (x, y, z) - transform.position;
 
 					if (
-						Mathf.RoundToInt (delta.x) < amountX &&
-						Mathf.RoundToInt (delta.y) < amountY &&
-						Mathf.RoundToInt (delta.z) < amountZ &&
+						Mathf.RoundToInt (delta.x) < amountX + 1 &&
+						Mathf.RoundToInt (delta.y) < amountX + 1 &&
+						Mathf.RoundToInt (delta.z) < amountX + 1 &&
 						Mathf.RoundToInt (delta.x) >= 0 &&
 						Mathf.RoundToInt (delta.y) >= 0 &&
 						Mathf.RoundToInt (delta.z) >= 0
@@ -193,8 +193,6 @@ public class GridCellsGenerator : MonoBehaviour {
 	}
 
 	private void Update () {
-		//offset += 0;
-
 		GenerateDigger (diggingTool.position, 1);
 		GenerateGridCells ();
 	}
@@ -204,31 +202,31 @@ public class GridCellsGenerator : MonoBehaviour {
 	}
 
 	private void Awake () {
-		scalarField = new Scalar[amountX, amountY, amountZ];
+		scalarField = new Scalar[amountX + 1, amountY + 1, amountZ + 1];
 
-		for (int z = 0; z < amountZ; z++) {
-			for (int y = 0; y < amountY; y++) {
-				for (int x = 0; x < amountX; x++) {
+		for (int z = 0; z < amountZ + 1; z++) {
+			for (int y = 0; y < amountY + 1; y++) {
+				for (int x = 0; x < amountX + 1; x++) {
 					scalarField[x, y, z] = new Scalar (new Vector3 (x, y, z), 1f);
 				}
 			}
 		}
 
-		gridCells = new GridCell[amountX - 1, amountY - 1, amountZ - 1];
+		gridCells = new GridCell[amountX, amountY, amountZ];
 	}
 
 	// Draws scalar field gizmos.
 	private void DrawScalarField () {
 		if (scalarField != null) {
-			for (int z = 0; z < amountZ; z++) {
-				for (int y = 0; y < amountY; y++) {
-					for (int x = 0; x < amountX; x++) {
+			for (int z = 0; z <= amountZ; z++) {
+				for (int y = 0; y <= amountY; y++) {
+					for (int x = 0; x <= amountX; x++) {
 						Gizmos.color = new Color (scalarField[x, y, z].value, scalarField[x, y, z].value, scalarField[x, y, z].value);
 						Gizmos.DrawSphere (scalarField[x, y, z].position, 0.1f);
 					}
 				}
-				for (int y = 0; y < 1; y++) {
-					for (int x = 0; x < amountX; x++) {
+				for (int y = 0; y <= 1; y++) {
+					for (int x = 0; x <= amountX; x++) {
 						Gizmos.color = new Color (scalarField[x, y, z].value, scalarField[x, y, z].value, scalarField[x, y, z].value);
 						Gizmos.DrawSphere (scalarField[x, y, z].position, 0.1f);
 					}

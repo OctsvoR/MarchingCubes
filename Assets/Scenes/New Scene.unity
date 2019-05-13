@@ -414,7 +414,7 @@ MonoBehaviour:
   amountX: 10
   amountY: 10
   amountZ: 10
-  offset: 27
+  offset: 30
   coverage: 3
   height: 4
   amplitude: 2
