@@ -162,31 +162,30 @@ public class GridCellsGenerator : MonoBehaviour {
 		for (int z = -radius; z < radius; z++) {
 			for (int y = -radius; y < radius; y++) {
 				for (int x = -radius; x < radius; x++) {
-					Vector3 delta = position - new Vector3 (x, y, z);
-					if (Vector3.Distance (position, new Vector3 (position.x + x, position.y + y, position.z + z)) <= radius) {
-						if (
-							Mathf.RoundToInt (position.x + x) < amountX &&
-							Mathf.RoundToInt (position.y + y) < amountY &&
-							Mathf.RoundToInt (position.z + z) < amountZ &&
-							Mathf.RoundToInt (position.x + x) >= 0 &&
-							Mathf.RoundToInt (position.y + y) >= 0 &&
-							Mathf.RoundToInt (position.z + z) >= 0
-						) {
-							scalarField[
-								Mathf.RoundToInt (position.x + x),
-								Mathf.RoundToInt (position.y + y),
-								Mathf.RoundToInt (position.z + z)
-							]
-							=
-							new Scalar (
-								new Vector3 (
-									Mathf.RoundToInt (position.x + x),
-									Mathf.RoundToInt (position.y + y),
-									Mathf.RoundToInt (position.z + z)
-								),
-								0f
-							);
-						}
+					Vector3 delta = position + new Vector3 (x, y, z) - transform.position;
+
+					if (
+						Mathf.RoundToInt (delta.x) < amountX &&
+						Mathf.RoundToInt (delta.y) < amountY &&
+						Mathf.RoundToInt (delta.z) < amountZ &&
+						Mathf.RoundToInt (delta.x) >= 0 &&
+						Mathf.RoundToInt (delta.y) >= 0 &&
+						Mathf.RoundToInt (delta.z) >= 0
+					) {
+						scalarField[
+							Mathf.RoundToInt (delta.x),
+							Mathf.RoundToInt (delta.y),
+							Mathf.RoundToInt (delta.z)
+						]
+						=
+						new Scalar (
+							new Vector3 (
+								Mathf.RoundToInt (delta.x + transform.position.x),
+								Mathf.RoundToInt (delta.y + transform.position.y),
+								Mathf.RoundToInt (delta.z + transform.position.z)
+							),
+							0f
+						);
 					}
 				}
 			}
@@ -196,7 +195,7 @@ public class GridCellsGenerator : MonoBehaviour {
 	private void Update () {
 		//offset += 0;
 
-		GenerateDigger (diggingTool.position, 3);
+		GenerateDigger (diggingTool.position, 1);
 		GenerateGridCells ();
 	}
 
