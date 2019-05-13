@@ -171,7 +171,7 @@ public class MarchingCube : MonoBehaviour {
 
 			DrawLines ();
 
-			worldRenderer.RenderWireframe ();
+			worldRenderer.Render ();
 
 			worldRenderer.trianglesList.Clear ();
 		}

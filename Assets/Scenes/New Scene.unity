@@ -304,6 +304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MarchingCube
       objectReference: {fileID: 0}
+    - target: {fileID: 2045089647531175074, guid: 02ee1f14848acc941b50dbe9775c609c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -448,7 +453,7 @@ PrefabInstance:
     - target: {fileID: 2045089647531175074, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
@@ -813,7 +818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1415021357
 Transform:
   m_ObjectHideFlags: 0
@@ -901,7 +906,7 @@ PrefabInstance:
     - target: {fileID: 2045089647531175074, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2045089647531175006, guid: 02ee1f14848acc941b50dbe9775c609c,
         type: 3}

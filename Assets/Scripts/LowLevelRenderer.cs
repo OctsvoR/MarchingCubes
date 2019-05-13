@@ -26,6 +26,7 @@ public class LowLevelRenderer : MonoBehaviour {
 		GL.Vertex (v2);
 	}
 	
+	/*
 	public void OnRenderObject () {
 		CreateLineMaterial ();
 		lineMaterial.SetPass (0);
@@ -54,4 +55,5 @@ public class LowLevelRenderer : MonoBehaviour {
 		}
 		GL.End ();
 	}
+	*/
 }
