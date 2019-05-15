@@ -39,6 +39,9 @@ public class GridCellsGenerator : MonoBehaviour {
 	public float offsetX;
 	public float offsetZ;
 
+	[Space ()]
+	public int resolution;
+
 	/// <summary>
 	/// Determines how far does our terrain cover noise map.
 	/// </summary>
@@ -47,20 +50,23 @@ public class GridCellsGenerator : MonoBehaviour {
 	/// <summary>
 	/// The height of our terrain surface.
 	/// </summary>
-	[Space (), Range (0f, 8f)]
+	[Space ()]
 	public int height;
 
 	/// <summary>
 	/// The amplitude of our terrain surface curvature.
 	/// </summary>
-	[Range (0f, 5f)]
-	public int amplitude;
+	[Range (0f, 10f)]
+	public float amplitude;
 
 	/// <summary>
 	/// A reference to the digging tool.
 	/// </summary>
 	[Space ()]
 	public Transform diggingTool;
+	private bool isDigging;
+
+	private MarchingCube marchingCube;
 
 	/// <summary>
 	/// Generates a scalar field of caves.
@@ -97,20 +103,20 @@ public class GridCellsGenerator : MonoBehaviour {
 						(float)z * (1f / (amountZ)) * coverage + offsetZ / (amountZ)
 					);
 
-					float output = perlin;
+					float output = perlin * amplitude;
+					int outputInteger = (int)output;
+					float outputLeftover = output - outputInteger;
 
 					scalarField[x, y, z] = new Scalar (new Vector3 (x, y, z) + transform.position, 0f);
-
 					if (y > height) {
-						int outputInteger = (int)output;
-						float outputLeftover = output - outputInteger;
-
 						if (height + outputInteger < amountY)
 							scalarField[x, height + outputInteger, z] = new Scalar (new Vector3 (x, height + outputInteger, z) + transform.position, 1f);
 
 						if (height + outputInteger + 1 < amountY)
-							scalarField[x, height + outputInteger + 1, z] = new Scalar (new Vector3 (x, height + outputInteger + 1, z) + transform.position, 1f - outputLeftover);
-					} else {
+							scalarField[x, height + outputInteger + 1, z] = new Scalar (new Vector3 (x, height + outputInteger + 1, z) + transform.position, outputLeftover);
+					}
+
+					if (y <= height + outputInteger) {
 						scalarField[x, y, z] = new Scalar (new Vector3 (x, y, z) + transform.position, 1f);
 					}
 				}
@@ -152,6 +158,7 @@ public class GridCellsGenerator : MonoBehaviour {
 			}
 		}
 	}
+
 	/// <summary>
 	/// Generates a digger sphere.
 	/// </summary>
@@ -165,8 +172,8 @@ public class GridCellsGenerator : MonoBehaviour {
 
 					if (
 						Mathf.RoundToInt (delta.x) < amountX + 1 &&
-						Mathf.RoundToInt (delta.y) < amountX + 1 &&
-						Mathf.RoundToInt (delta.z) < amountX + 1 &&
+						Mathf.RoundToInt (delta.y) < amountY + 1 &&
+						Mathf.RoundToInt (delta.z) < amountZ + 1 &&
 						Mathf.RoundToInt (delta.x) >= 0 &&
 						Mathf.RoundToInt (delta.y) >= 0 &&
 						Mathf.RoundToInt (delta.z) >= 0
@@ -192,21 +199,37 @@ public class GridCellsGenerator : MonoBehaviour {
 	}
 
 	private void Update () {
-		float distance = Vector3.Distance (diggingTool.position, transform.position + new Vector3 (amountX, 0, amountZ) * 0.5f);
-		MarchingCube marchingCube = transform.parent.GetComponent<MarchingCube> ();
+		isDigging = false;
 
-		if (distance <= 14.1f) {
-			GenerateDigger (diggingTool.position, 1);
-			GenerateGridCells ();
-			marchingCube.doMarch = true;
+		if (Input.GetKey (KeyCode.Space)) {
+			isDigging = true;
+		}
+
+		marchingCube = transform.parent.GetComponent<MarchingCube> ();
+
+		if (isDigging) {
+			float distance = Vector3.Distance (diggingTool.position, transform.position + new Vector3 (amountX, 0, amountZ) * 0.5f);
+
+			if (distance <= 10f) {
+				GenerateDigger (diggingTool.position, 3);
+				GenerateGridCells ();
+				marchingCube.doMarch = true;
+			} else {
+				marchingCube.doMarch = false;
+			}
 		} else {
 			marchingCube.doMarch = false;
 		}
 	}
 
 	private void Start () {
+		marchingCube = transform.parent.GetComponent<MarchingCube> ();
+
 		GenerateTerrainScalarField ();
-		GenerateCavesScalarField ();
+		//GenerateCavesScalarField ();
+		GenerateGridCells ();
+
+		marchingCube.doMarch = true;
 	}
 
 	private void Init () {
@@ -259,6 +282,6 @@ public class GridCellsGenerator : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos () {
-		//DrawScalarField ();
+		DrawScalarField ();
 	}
 }

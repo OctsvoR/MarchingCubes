@@ -6,22 +6,26 @@ public class ChunksManager : MonoBehaviour {
 
 	public MarchingCube chunkPrefab;
 
-	[Space (10)]
+	[Space ()]
 	public int amountX;
 	public int amountZ;
 
-	[Space (10)]
+	[Space (), Range (-8, 8)]
+	public int height;
+
+	[Space ()]
 	public Transform diggingTool;
 
 	private void GenerateChunks (int amountX, int amountZ) {
 		for (int z = 0; z < amountZ; z++) {
 			for (int x = 0; x < amountX; x++) {
 				MarchingCube chunk = Instantiate (chunkPrefab);
-				chunk.transform.position = new Vector3 (x, chunk.transform.position.y, z) * 10f;
+				chunk.transform.position = new Vector3 (x, chunk.transform.position.y, z) * chunkPrefab.gcg.amountX;
 				GridCellsGenerator gcg = chunk.transform.GetChild (0).GetComponent<GridCellsGenerator> ();
 				gcg.offsetX = x * gcg.amountX * gcg.coverage;
 				gcg.offsetZ = z * gcg.amountZ * gcg.coverage;
 				gcg.diggingTool = diggingTool;
+				gcg.height = height;
 			}
 		}
 		

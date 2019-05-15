@@ -7,6 +7,8 @@ public class LowLevelRenderer : MonoBehaviour {
 
 	public Color color;
 
+	private bool once;
+
 	static Material lineMaterial;
 	static void CreateLineMaterial () {
 		if (!lineMaterial) {
@@ -25,35 +27,25 @@ public class LowLevelRenderer : MonoBehaviour {
 		GL.Vertex (v1);
 		GL.Vertex (v2);
 	}
-	
+
 	/*
 	public void OnRenderObject () {
 		CreateLineMaterial ();
 		lineMaterial.SetPass (0);
 
-		GL.Begin (GL.LINES);
-		for (int i = 0; i < triangles.Length; i++) {
-			GL.Color (color);
-			GL.Vertex (triangles[i].positions[0]);
-			GL.Vertex (triangles[i].positions[1]);
+		if (triangles != null) {
+			for (int i = 0; i < triangles.Length; i++) {
+				GL.Color (color);
+				GL.Begin (GL.LINES);
+				GL.Vertex (triangles[i].positions[0]);
+				GL.Vertex (triangles[i].positions[1]);
+				GL.Vertex (triangles[i].positions[1]);
+				GL.Vertex (triangles[i].positions[2]);
+				GL.Vertex (triangles[i].positions[2]);
+				GL.Vertex (triangles[i].positions[0]);
+				GL.End ();
+			}
 		}
-		GL.End ();
-
-		GL.Begin (GL.LINES);
-		for (int i = 0; i < triangles.Length; i++) {
-			GL.Color (color);
-			GL.Vertex (triangles[i].positions[1]);
-			GL.Vertex (triangles[i].positions[2]);
-		}
-		GL.End ();
-
-		GL.Begin (GL.LINES);
-		for (int i = 0; i < triangles.Length; i++) {
-			GL.Color (color);
-			GL.Vertex (triangles[i].positions[2]);
-			GL.Vertex (triangles[i].positions[0]);
-		}
-		GL.End ();
 	}
 	*/
 }
