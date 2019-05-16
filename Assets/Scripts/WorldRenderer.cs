@@ -59,6 +59,7 @@ public class WorldRenderer : MonoBehaviour {
 	public void Render () {
 		meshVertices = new Vector3[trianglesList.Count * 3];
 		meshTriangles = new int[trianglesList.Count * 3];
+		meshUV = new Vector2[trianglesList.Count * 3];
 
 		mesh = new Mesh ();
 		GetComponent<MeshFilter> ().mesh = mesh;
@@ -66,6 +67,7 @@ public class WorldRenderer : MonoBehaviour {
 		for (int i = 0, k = 0; i < trianglesList.Count; i++) {
 			for (int j = 0; j < 3; j++, k++) {
 				meshVertices[k] = trianglesList[i].positions[j] - transform.position;
+				meshUV[k] = meshVertices[k];
 				meshTriangles[k] = k;
 			}
 		}
@@ -73,6 +75,7 @@ public class WorldRenderer : MonoBehaviour {
 		mesh.Clear ();
 
 		mesh.vertices = meshVertices;
+		mesh.uv = meshUV;
 		mesh.triangles = meshTriangles;
 
 		mesh.RecalculateNormals ();

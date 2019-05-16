@@ -44,15 +44,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldRenderer: {fileID: 931082103}
-  amountX: 5
-  amountY: 10
-  amountZ: 5
+  sizeX: 10
+  sizeY: 40
+  sizeZ: 10
   offsetX: 0
   offsetZ: 0
   resolution: 3
-  coverage: 0.375
+  coverage: 0.1
   height: 0
-  amplitude: 10
+  amplitude: 30
   diggingTool: {fileID: 0}
 --- !u!1 &931082102
 GameObject:

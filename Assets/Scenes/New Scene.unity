@@ -277,8 +277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkPrefab: {fileID: 2045089647531175073, guid: 02ee1f14848acc941b50dbe9775c609c,
     type: 3}
-  amountX: 50
-  amountZ: 50
+  amountX: 10
+  amountZ: 10
   height: 0
   diggingTool: {fileID: 1415021357}
 --- !u!4 &1077720481
@@ -451,7 +451,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f643f36ebd4049844bd26b009f3b49f7, type: 2}
+  - {fileID: 2100000, guid: 37ccb5b910ab80d41812d0761e858c4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

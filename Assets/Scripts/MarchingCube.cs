@@ -162,9 +162,9 @@ public class MarchingCube : MonoBehaviour {
 	private void Update () {
 		if (doMarch) {
 			if (gcg.gridCells != null) {
-				for (int z = 0; z < gcg.amountZ; z++) {
-					for (int y = 0; y < gcg.amountY; y++) {
-						for (int x = 0; x < gcg.amountX; x++) {
+				for (int z = 0; z < gcg.sizeZ; z++) {
+					for (int y = 0; y < gcg.sizeY; y++) {
+						for (int x = 0; x < gcg.sizeX; x++) {
 							gridCell = gcg.gridCells[x, y, z];
 
 							Polygonise (gridCell, limit, triangles);
