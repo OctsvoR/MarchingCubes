@@ -277,8 +277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkPrefab: {fileID: 2045089647531175073, guid: 02ee1f14848acc941b50dbe9775c609c,
     type: 3}
-  amountX: 10
-  amountZ: 10
+  amountX: 1
+  amountZ: 1
   height: 0
   diggingTool: {fileID: 1415021357}
 --- !u!4 &1077720481

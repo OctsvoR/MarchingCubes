@@ -181,9 +181,12 @@ public class GridCellsGenerator : MonoBehaviour {
 		marchingCube = transform.parent.GetComponent<MarchingCube> ();
 
 		if (isDigging) {
-			float distance = Vector3.Distance (diggingTool.position, transform.position + new Vector3 (sizeX, 0, sizeZ) * 0.5f);
+			Vector3 delta = (transform.position + new Vector3 (sizeX, sizeY, sizeZ) * 0.5f) - diggingTool.position;
+			float distanceX = Mathf.Abs (delta.x);
+			float distanceY = Mathf.Abs (delta.y);
+			float distanceZ = Mathf.Abs (delta.z);
 
-			if (distance <= 10f) {
+			if (distanceX <= 10f && distanceY <= 20f && distanceZ <= 10f) {
 				GenerateDigger (diggingTool.position, 3);
 				GenerateGridCells ();
 				marchingCube.doMarch = true;
@@ -255,5 +258,6 @@ public class GridCellsGenerator : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos () {
+		DrawScalarField ();
 	}
 }
