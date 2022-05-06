@@ -1,4 +1,5 @@
 # Marching Cubes
-This is an implementation of Marching Cubes algorithm.
 
-In the future, we will implement terrain generation and terrain digging, and continue to improve on the optimization.
+This is a scrolling marching cubes implementation of http://paulbourke.net/geometry/polygonise/.
+
+In the future, I will implement terrain generation and terrain digging, and continue to improve on the optimization.
